@@ -8,11 +8,18 @@
 > ~/.vimrc
 ```
 syntax on
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 et ai
+
+" YAML 파일에 대한 설정 (2칸 들여쓰기, 스페이스 사용)
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab autoindent
+
+" Python 파일에 대한 설정 (4칸 들여쓰기, 스페이스 사용)
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab autoindent
-autocmd CursorMoved,CursorMovedI * execute 'set colorcolumn=' . virtcol('.')
-set hlsearch
-set incsearch
+
+" CursorMoved 이벤트 최적화: virtcol('.')가 변할 때만 실행
+autocmd CursorMoved,CursorMovedI * if &colorcolumn != virtcol('.') | execute 'setlocal colorcolumn=' . virtcol('.') | endif
+
+" 검색 관련 설정 (setlocal 적용)
+autocmd FileType * setlocal hlsearch incsearch
 ```
 
 ### 2.bash history 용량 및 최적화 설정 (bashrc)
